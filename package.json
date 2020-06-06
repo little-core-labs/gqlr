@@ -1,0 +1,52 @@
+{
+  "name": "gqlr",
+  "version": "0.0.0",
+  "description": "WIP: (g)raph(ql)-(r)equest.  A simplified fork of graphql-request",
+  "type": "module",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "exports": {
+    "import": "./esm/index.js",
+    "require": "./cjs/index.js"
+  },
+  "keywords": [
+    "12core",
+    "graphql",
+    "graphql-request",
+    "esm"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/little-core-labs/gqlr.git"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "ascjs esm cjs",
+    "prepare": "npm run build",
+    "prepublishOnly": "git push --follow-tags && gh-release",
+    "test": "run-s build test:*",
+    "test:deps": "dependency-check . --no-dev --no-peer",
+    "test:lint": "eslint --ext .js esm/",
+    "test:tape": "tap --no-esm esm",
+    "version": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md"
+  },
+  "author": "Bret Comnes <bcomnes@gmail.com> (https://bret.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/little-core-labs/gqlr/issues"
+  },
+  "homepage": "https://github.com/little-core-labs/gqlr#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@12core/eslint-config-12core": "^1.0.1",
+    "ascjs": "^4.0.0",
+    "auto-changelog": "^2.0.0",
+    "dependency-check": "^4.1.0",
+    "eslint": "^7.0.0",
+    "gh-release": "^3.5.0",
+    "npm-run-all": "^4.1.5",
+    "tap": "^14.10.2"
+  }
+}
