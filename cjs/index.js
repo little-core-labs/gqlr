@@ -1,7 +1,8 @@
-import fetch from 'node-fetch'
-import { ClientError } from './types.js'
+'use strict';
+const fetch = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('node-fetch'))
+const { ClientError } = require('./types.js')
 
-export class GraphQLClient {
+class GraphQLClient {
   constructor (url, options = {}) {
     this.url = url
     this.options = options
@@ -59,16 +60,19 @@ export class GraphQLClient {
     return this
   }
 }
+exports.GraphQLClient = GraphQLClient
 
-export function rawRequest (url, query, variables) {
+function rawRequest (url, query, variables) {
   const client = new GraphQLClient(url)
   return client.rawRequest(query, variables)
 }
+exports.rawRequest = rawRequest
 
-export function request (url, query, variables) {
+function request (url, query, variables) {
   const client = new GraphQLClient(url)
   return client.request(query, variables)
 }
+exports.request = request
 
 function getResult (response) {
   const contentType = response.headers.get('Content-Type')

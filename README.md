@@ -6,7 +6,7 @@ Fork of the Minimal GraphQL client graphql-request.
 
 - Even simpler than graphql-request! Needlessly duplicated code removed.
 - Same Promise-based API (works with `async` / `await`).
-- No Typescript. Type annotations via JSDoc.
+- No Typescript.
 - Actually Isomorphic (works with Node / browsers). Ships a real ESM module, instead of the fake one TS generates.
 
 ## Why?
@@ -311,10 +311,10 @@ main().catch((error) => console.error(error))
 - work with Node.js "type": "module".
 - further reducing library size (remove unnecessarily duplicated code)
 - removing the project overhead of Typescript syntax, Typescript tooling, and Typescript bugs.
-- Provide Type annotations via JSDoc.
 - Clarify undocumented methods and edge-cases.
 
 Breaking changes include:
 
 - No fake 'default' export.  If you use this, switch to importing named exports.
+- Imports node-fetch.  This might break react native, not sure.
 
