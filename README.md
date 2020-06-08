@@ -1,6 +1,7 @@
 # gqlr
+![tests](https://github.com/little-core-labs/gqlr/workflows/tests/badge.svg)
 
-Fork of the Minimal GraphQL client graphql-request.
+Minimaler Fork of the Minimal GraphQL client [graphql-request](https://ghub.io/graphql-request).
 
 ## Features
 
