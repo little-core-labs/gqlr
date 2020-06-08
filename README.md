@@ -12,7 +12,7 @@ Minimaler Fork of the Minimal GraphQL client [graphql-request](https://ghub.io/g
 
 ## Why?
 
-graphql-request was causing problems downstream due to the fake ESM module it ships, making it incompatible with **both** browser esm and node.js esm.  It also appeared prisma labs isn't really paying close attention to graphql-request anymore, and lots of people are using it as is, so the easiest thing to do was fork in order to gain the properties we desired.
+graphql-request was causing problems downstream due to the fake ESM module it ships, making it incompatible with **both** browser esm and node.js esm.  Additionally, many people are using graphql-request already, so making some simple breaking changes would cause a headache for everyone involved.
 
 ## Install
 
