@@ -108,7 +108,7 @@ Set a specific header by a key and a value.
 
 Convenience function to instantiate a client and make a request in a single function call, returning the extended properties of the graphql request.
 
-### `data = rawRequest(url, query, [variables])`
+### `data = request(url, query, [variables])`
 
 Convenience function to instantiate a client and make a request in a single function call.
 
