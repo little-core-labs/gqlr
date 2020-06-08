@@ -69,6 +69,49 @@ const client = new GraphQLClient(endpoint, { headers: {} })
 client.request(query, variables).then((data) => console.log(data))
 ```
 
+## API
+
+### `import { GraphQLClient, request, rawRequest } from 'gqlr'`
+
+Import the `GraphQLClient` class, `request` and `rawRequest` from `gqlr`.
+
+### `client = new GraphQLClient(url, [opts])`
+
+Create a new `client` instance of `GraphQLClient` for a given `url` with the following default `opts` passed the [`node-fetch`](https://ghub.io/node-fetch) internally:
+
+```js
+{
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+}
+````
+
+Any `opts.headers` are mixed in with the default headers, and any other properties on `opts` are passed as `fetch` options.
+
+### `{ headers, status, ...result } = await client.rawRequest(query, [variables])`
+
+Make a `query` request with a `client` including the optional `variables` object, returning extra response properties like `extensions`.
+
+### `data = await client.request(query, [variables])`
+
+Make a `query` request with a `client` including the optional `variables` object, returning just the `data` field.
+
+### `client = client.setHeaders(headers)`
+
+Pass a `headers` object to a client to customize the headers.
+
+### `client = client.setHeader(key, value)`
+
+Set a specific header by a key and a value.
+
+### `{ headers, status, ...result } = rawRequest(url, query, [variables])`
+
+Convenience function to instantiate a client and make a request in a single function call, returning the extended properties of the graphql request.
+
+### `data = rawRequest(url, query, [variables])`
+
+Convenience function to instantiate a client and make a request in a single function call.
+
 ## Examples
 
 ### Authentication via HTTP header
