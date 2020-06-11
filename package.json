@@ -1,6 +1,6 @@
 {
   "name": "gqlr",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "WIP: (g)raph(ql)-(r)equest.  A simplified fork of graphql-request",
   "type": "module",
   "main": "cjs/index.js",
