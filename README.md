@@ -362,3 +362,7 @@ Breaking changes include:
 - No fake 'default' export.  If you use this, switch to importing named exports.
 - Imports node-fetch.  This might break react native, not sure.
 
+
+### This is too simple, to use the power of graphql you must use...
+
+- This module pairs really well with [swr](https://swr.now.sh) and other similar ideas.  If you need caching, react hooks and any other party tricks, just use that.  Orthogonal concerns ftw.
