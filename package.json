@@ -22,12 +22,14 @@
   "scripts": {
     "build": "rimraf cjs/* && ascjs esm cjs",
     "prepare": "npm run build",
-    "prepublishOnly": "git push --follow-tags && gh-release",
+    "prepublishOnly": "git push --follow-tags && gh-release -y",
     "test": "run-s build test:*",
     "test:deps": "dependency-check . --no-dev --no-peer",
     "test:lint": "eslint --ext .js esm/",
     "test:tape": "tap --no-esm --jobs=1",
-    "version": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md"
+    "version": "run-s prepare version:*",
+    "version:changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:'",
+    "version:git": "git add CHANGELOG.md cjs"
   },
   "author": "Bret Comnes <bcomnes@gmail.com> (https://bret.io/)",
   "license": "MIT",
