@@ -3,7 +3,7 @@ import body from 'body-parser'
 import express from 'express'
 import { createServer } from 'http'
 
-import { GraphQLClient, request, rawRequest } from './index.js'
+import { GraphQLClient, request, rawRequest, stringRequest } from './index.js'
 
 tap.afterEach((done, t) => {
   // https://stackoverflow.com/questions/10378690/remove-route-mappings-in-nodejs-express/28369539#28369539
@@ -82,6 +82,30 @@ tap.test('minimal raw query', async t => {
     }
   }).body
   const { headers, ...result } = await rawRequest(ctx.url, '{ viewer { id } }')
+
+  t.deepEqual(result, { data, extensions, status: 200 })
+})
+
+tap.test('minimal string query', async t => {
+  const { extensions, data } = ctx.mock({
+    body: {
+      data: {
+        viewer: {
+          id: 'some-id'
+        }
+      },
+      extensions: {
+        version: '1'
+      }
+    }
+  }).body
+
+  const body = JSON.stringify({
+    query: '{ viewer { id } }',
+    variables: {}
+  })
+
+  const { headers, ...result } = await stringRequest(ctx.url, body)
 
   t.deepEqual(result, { data, extensions, status: 200 })
 })

@@ -8,13 +8,9 @@ class GraphQLClient {
     this.options = options
   }
 
-  async rawRequest (query, variables) {
+  async stringRequest (body) {
+    // If you need to generate your gql body elsewhere, you can still utilize errors and options.
     const { headers, ...others } = this.options
-
-    const body = JSON.stringify({
-      query,
-      variables: variables
-    })
 
     const response = await fetch(this.url, {
       method: 'POST',
@@ -30,11 +26,26 @@ class GraphQLClient {
       return { ...result, headers, status }
     } else {
       const errorResult = typeof result === 'string' ? { error: result } : result
+
+      let bodyObj = body
+      try {
+        bodyObj = JSON.parse(body)
+      } catch (e) { /* Swallow parsing errors */ }
+
       throw new ClientError(
         { ...errorResult, status: response.status, headers: response.headers },
-        { query, variables }
+        bodyObj
       )
     }
+  }
+
+  rawRequest (query, variables) {
+    const body = JSON.stringify({
+      query,
+      variables: variables
+    })
+
+    return this.stringRequest(body)
   }
 
   async request (query, variables) {
@@ -73,6 +84,12 @@ function request (url, query, variables) {
   return client.request(query, variables)
 }
 exports.request = request
+
+function stringRequest (url, body) {
+  const client = new GraphQLClient(url)
+  return client.stringRequest(body)
+}
+exports.stringRequest = stringRequest
 
 function getResult (response) {
   const contentType = response.headers.get('Content-Type')
