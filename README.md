@@ -96,6 +96,20 @@ Make a `query` request with a `client` including the optional `variables` object
 
 Make a `query` request with a `client` including the optional `variables` object, returning just the `data` field.
 
+### `data = await client.stringRequest(body)`
+
+Make a request with a `body` string to the configured GQL endpoint.  The body should be in the form of:
+
+
+```js
+const body = JSON.stringify({
+  query: '{ viewer { id } }',
+  variables: {}
+})
+```
+
+Useful with tools like [SWR](https://github.com/vercel/swr), where you usually stringify a query and variables object into a cache key that gets passed to your fetcher function.  With `stringRequest`, you can avoid double `JSON.stringify` problems, or complex variable scope passing.
+
 ### `client = client.setHeaders(headers)`
 
 Pass a `headers` object to a client to customize the headers.
@@ -111,6 +125,10 @@ Convenience function to instantiate a client and make a request in a single func
 ### `data = request(url, query, [variables])`
 
 Convenience function to instantiate a client and make a request in a single function call.
+
+### `data = stringRequest(url, body)`
+
+Convenience function to instantiate a client and make a `stringRequest` in a single function call.
 
 ## Examples
 
