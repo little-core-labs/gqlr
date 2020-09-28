@@ -4,7 +4,7 @@ const body = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* ista
 const express = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('express'))
 const { createServer } = require('http')
 
-const { GraphQLClient, request, rawRequest, stringRequest } = require('./index.js')
+const { GraphQLClient, request, rawRequest, rawStringRequest } = require('./index.js')
 
 tap.afterEach((done, t) => {
   // https://stackoverflow.com/questions/10378690/remove-route-mappings-in-nodejs-express/28369539#28369539
@@ -106,7 +106,7 @@ tap.test('minimal string query', async t => {
     variables: {}
   })
 
-  const { headers, ...result } = await stringRequest(ctx.url, body)
+  const { headers, ...result } = await rawStringRequest(ctx.url, body)
 
   t.deepEqual(result, { data, extensions, status: 200 })
 })

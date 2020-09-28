@@ -7,7 +7,7 @@ export class GraphQLClient {
     this.options = options
   }
 
-  async stringRequest (body) {
+  async rawStringRequest (body) {
     // If you need to generate your gql body elsewhere, you can still utilize errors and options.
     const { headers, ...others } = this.options
 
@@ -44,11 +44,16 @@ export class GraphQLClient {
       variables: variables
     })
 
-    return this.stringRequest(body)
+    return this.rawStringRequest(body)
   }
 
   async request (query, variables) {
     const { data } = await this.rawRequest(query, variables)
+    return data
+  }
+
+  async stringRequest (body) {
+    const { data } = await this.rawStringRequest(body)
     return data
   }
 
@@ -84,6 +89,11 @@ export function request (url, query, variables) {
 export function stringRequest (url, body) {
   const client = new GraphQLClient(url)
   return client.stringRequest(body)
+}
+
+export function rawStringRequest (url, body) {
+  const client = new GraphQLClient(url)
+  return client.rawStringRequest(body)
 }
 
 function getResult (response) {
