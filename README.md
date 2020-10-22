@@ -118,7 +118,7 @@ Pass a `headers` object to a client to customize the headers.
 
 Set a specific header by a key and a value.
 
-### `{ headers, status, ...result } = rawRequest(url, query, [variables])`
+### `{ headers, status, ...result } = rawRequest(url, query, [variables], [opts])`
 
 Convenience function to instantiate a client and make a request in a single function call, returning the extended properties of the graphql request.
 
