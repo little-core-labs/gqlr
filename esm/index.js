@@ -76,23 +76,23 @@ export class GraphQLClient {
   }
 }
 
-export function rawRequest (url, query, variables) {
-  const client = new GraphQLClient(url)
+export function rawRequest (url, query, variables, opts) {
+  const client = new GraphQLClient(url, opts)
   return client.rawRequest(query, variables)
 }
 
-export function request (url, query, variables) {
-  const client = new GraphQLClient(url)
+export function request (url, query, variables, opts) {
+  const client = new GraphQLClient(url, opts)
   return client.request(query, variables)
 }
 
-export function stringRequest (url, body) {
-  const client = new GraphQLClient(url)
+export function stringRequest (url, body, opts) {
+  const client = new GraphQLClient(url, opts)
   return client.stringRequest(body)
 }
 
-export function rawStringRequest (url, body) {
-  const client = new GraphQLClient(url)
+export function rawStringRequest (url, body, opts) {
+  const client = new GraphQLClient(url, opts)
   return client.rawStringRequest(body)
 }
 

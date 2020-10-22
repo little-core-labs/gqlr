@@ -122,11 +122,11 @@ Set a specific header by a key and a value.
 
 Convenience function to instantiate a client and make a request in a single function call, returning the extended properties of the graphql request.
 
-### `data = request(url, query, [variables])`
+### `data = request(url, query, [variables], [opts])`
 
 Convenience function to instantiate a client and make a request in a single function call.
 
-### `data = stringRequest(url, body)`
+### `data = stringRequest(url, body, [opts])`
 
 Convenience function to instantiate a client and make a `stringRequest` in a single function call.
 
