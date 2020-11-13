@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/little-core-labs/gqlr#readme",
   "dependencies": {
+    "lodash.get": "^4.4.2",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {

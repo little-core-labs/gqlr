@@ -169,7 +169,7 @@ tap.test('basic error', async t => {
 
   const res = await request(ctx.url, 'x').catch((x) => x)
 
-  t.deepEqual(res.message, 'GraphQL Error (Code: 200): {"response":{"errors":{"message":"Syntax Error GraphQL request (1:1) Unexpected Name \\"x\\"\\n\\n1: x\\n   ^\\n","locations":[{"line":1,"column":1}]},"status":200,"headers":{}},"request":{"query":"x"}}')
+  t.deepEqual(res.message, 'Syntax Error GraphQL request (1:1) Unexpected Name "x"\n\n1: x\n   ^\n')
 })
 
 tap.test('basic error with raw request', async t => {
@@ -187,7 +187,7 @@ tap.test('basic error with raw request', async t => {
     }
   })
   const res = await rawRequest(ctx.url, 'x').catch((x) => x)
-  t.deepEqual(res.message, 'GraphQL Error (Code: 200): {"response":{"errors":{"message":"Syntax Error GraphQL request (1:1) Unexpected Name \\"x\\"\\n\\n1: x\\n   ^\\n","locations":[{"line":1,"column":1}]},"status":200,"headers":{}},"request":{"query":"x"}}')
+  t.deepEqual(res.message, 'Syntax Error GraphQL request (1:1) Unexpected Name "x"\n\n1: x\n   ^\n')
 })
 
 tap.test('shut down test server', t => {

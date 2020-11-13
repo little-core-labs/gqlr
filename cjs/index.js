@@ -1,6 +1,6 @@
 'use strict';
 const fetch = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('node-fetch'))
-const { ClientError } = require('./types.js')
+const get = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('lodash.get'))
 
 class GraphQLClient {
   constructor (url, options = {}) {
@@ -8,34 +8,33 @@ class GraphQLClient {
     this.options = options
   }
 
-  async rawStringRequest (body) {
+  async rawStringRequest (requestBody) {
     // If you need to generate your gql body elsewhere, you can still utilize errors and options.
     const { headers, ...others } = this.options
 
     const response = await fetch(this.url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', ...headers },
-      body,
+      body: requestBody,
       ...others
     })
 
-    const result = await getResult(response)
+    const responseBody = await getBody(response)
 
-    if (response.ok && !result.errors && result.data) {
+    if (response.ok && !responseBody.errors && responseBody.data) {
       const { headers, status } = response
-      return { ...result, headers, status }
+      return { ...responseBody, headers, status }
     } else {
-      const errorResult = typeof result === 'string' ? { error: result } : result
+      const errorResponseBody = typeof result === 'string' ? { error: responseBody } : responseBody
 
-      let bodyObj = body
+      let requestBodyObject = requestBody
       try {
-        bodyObj = JSON.parse(body)
+        requestBodyObject = JSON.parse(requestBody)
       } catch (e) { /* Swallow parsing errors */ }
 
-      throw new ClientError(
-        { ...errorResult, status: response.status, headers: response.headers },
-        bodyObj
-      )
+      const error = generateError({ errorResponseBody, response, requestBodyObject })
+
+      throw error
     }
   }
 
@@ -102,7 +101,7 @@ function rawStringRequest (url, body, opts) {
 }
 exports.rawStringRequest = rawStringRequest
 
-function getResult (response) {
+function getBody (response) {
   const contentType = response.headers.get('Content-Type')
   if (contentType && contentType.startsWith('application/json')) {
     return response.json()
@@ -110,3 +109,22 @@ function getResult (response) {
     return response.text()
   }
 }
+
+function generateError ({ errorResponseBody, response, requestBodyObject }) {
+  // The goal is to capture a real error, with a halfway decent message.
+  // If there are additional object paths with good errors, we can add them here.
+  // This coveres apollo.
+  const message = get(errorResponseBody, 'errors[0].extensions.exception.data.message[0].messages[0].message') ||
+    get(errorResponseBody, 'errors[0].extensions.exception.data.data[0].messages[0].message') ||
+    get(errorResponseBody, 'errors[0].message') ||
+    get(errorResponseBody, 'errors.message') ||
+    get(response, 'statusText') ||
+    'There was an error with the request.'
+  const error = new Error(message)
+
+  error.response = { ...errorResponseBody, status: response.status, headers: response.headers }
+  error.request = requestBodyObject
+
+  return error
+}
+exports.generateError = generateError
