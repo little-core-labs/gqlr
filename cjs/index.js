@@ -25,7 +25,7 @@ class GraphQLClient {
       const { headers, status } = response
       return { ...responseBody, headers, status }
     } else {
-      const errorResponseBody = typeof result === 'string' ? { error: responseBody } : responseBody
+      const errorResponseBody = typeof responseBody === 'string' ? { error: responseBody } : responseBody
 
       let requestBodyObject = requestBody
       try {
@@ -122,7 +122,7 @@ function generateError ({ errorResponseBody, response, requestBodyObject }) {
     'There was an error with the request.'
   const error = new Error(message)
 
-  error.response = { ...errorResponseBody, status: response.status, headers: response.headers }
+  error.response = { ...errorResponseBody, status: response.status, headers: Object.fromEntries(response.headers.entries()) }
   error.request = requestBodyObject
 
   return error
