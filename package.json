@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@12core/eslint-config-12core": "^3.0.0",
-    "ascjs": "^4.0.0",
+    "ascjs": "^5.0.0",
     "auto-changelog": "^2.0.0",
     "body-parser": "^1.19.0",
     "dependency-check": "^4.1.0",
