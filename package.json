@@ -26,7 +26,7 @@
     "test": "run-s build test:*",
     "test:deps": "dependency-check . --no-dev --no-peer",
     "test:lint": "eslint --ext .js esm/",
-    "test:tape": "tap --no-esm --jobs=1",
+    "test:tape": "tap --no-check-coverage --jobs=1",
     "version": "run-s prepare version:*",
     "version:changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:'",
     "version:git": "git add CHANGELOG.md cjs"
