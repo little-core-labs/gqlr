@@ -5,16 +5,15 @@ import { createServer } from 'http'
 
 import { GraphQLClient, request, rawRequest, rawStringRequest } from './index.js'
 
-tap.afterEach((done, t) => {
+const ctx = {}
+
+tap.afterEach(() => {
   // https://stackoverflow.com/questions/10378690/remove-route-mappings-in-nodejs-express/28369539#28369539
   ctx.server._router.stack.forEach((item, i) => {
     if (item.name === 'mock') ctx.server._router.stack.splice(i, 1)
   })
-
-  done()
 })
 
-const ctx = {}
 tap.test('set up test server', t => {
   ctx.server = express()
   ctx.server.use(body.json())
@@ -65,7 +64,7 @@ tap.test('minimal query', async t => {
   }).body.data
 
   const results = await request(ctx.url, '{ viewer { id } }')
-  t.deepEqual(results, data)
+  t.same(results, data)
 })
 
 tap.test('minimal raw query', async t => {
@@ -83,7 +82,7 @@ tap.test('minimal raw query', async t => {
   }).body
   const { headers, ...result } = await rawRequest(ctx.url, '{ viewer { id } }')
 
-  t.deepEqual(result, { data, extensions, status: 200 })
+  t.same(result, { data, extensions, status: 200 })
 })
 
 tap.test('minimal string query', async t => {
@@ -107,7 +106,7 @@ tap.test('minimal string query', async t => {
 
   const { headers, ...result } = await rawStringRequest(ctx.url, body)
 
-  t.deepEqual(result, { data, extensions, status: 200 })
+  t.same(result, { data, extensions, status: 200 })
 })
 
 tap.test('minimal raw query with response headers', async t => {
@@ -132,8 +131,8 @@ tap.test('minimal raw query with response headers', async t => {
   })
   const { headers, ...result } = await rawRequest(ctx.url, '{ viewer { id } }')
 
-  t.deepEqual(result, { data, extensions, status: 200 })
-  t.deepEqual(headers.get('X-Custom-Header'), reqHeaders['X-Custom-Header'])
+  t.same(result, { data, extensions, status: 200 })
+  t.same(headers.get('X-Custom-Header'), reqHeaders['X-Custom-Header'])
 })
 
 tap.test('content-type with charset', async t => {
@@ -148,7 +147,7 @@ tap.test('content-type with charset', async t => {
     }
   }).body
   const results = await request(ctx.url, '{ viewer { id } }')
-  t.deepEqual(results, data)
+  t.same(results, data)
 })
 
 tap.test('basic error', async t => {
@@ -168,7 +167,7 @@ tap.test('basic error', async t => {
 
   const res = await request(ctx.url, 'x').catch((x) => x)
 
-  t.deepEqual(res.message, 'Syntax Error GraphQL request (1:1) Unexpected Name "x"\n\n1: x\n   ^\n')
+  t.same(res.message, 'Syntax Error GraphQL request (1:1) Unexpected Name "x"\n\n1: x\n   ^\n')
 })
 
 tap.test('basic error with raw request', async t => {
@@ -186,7 +185,7 @@ tap.test('basic error with raw request', async t => {
     }
   })
   const res = await rawRequest(ctx.url, 'x').catch((x) => x)
-  t.deepEqual(res.message, 'Syntax Error GraphQL request (1:1) Unexpected Name "x"\n\n1: x\n   ^\n')
+  t.same(res.message, 'Syntax Error GraphQL request (1:1) Unexpected Name "x"\n\n1: x\n   ^\n')
 })
 
 tap.test('shut down test server', t => {

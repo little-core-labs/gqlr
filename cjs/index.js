@@ -1,6 +1,6 @@
 'use strict';
-const fetch = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('node-fetch'))
-const get = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('lodash.get'))
+const fetch = (m => /* c8 ignore start */ m.__esModule ? m.default : m /* c8 ignore stop */)(require('node-fetch'))
+const get = (m => /* c8 ignore start */ m.__esModule ? m.default : m /* c8 ignore stop */)(require('lodash.get'))
 
 class GraphQLClient {
   constructor (url, options = {}) {
