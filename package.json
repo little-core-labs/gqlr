@@ -49,7 +49,7 @@
     "dependency-check": "^4.1.0",
     "eslint": "^7.2.0",
     "express": "^4.17.1",
-    "fetch-cookie": "^1.0.0",
+    "fetch-cookie": "^2.0.1",
     "gh-release": "^6.0.0",
     "npm-run-all2": "^5.0.0",
     "rimraf": "^3.0.2",
