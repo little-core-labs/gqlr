@@ -39,7 +39,7 @@
   "homepage": "https://github.com/little-core-labs/gqlr#readme",
   "dependencies": {
     "lodash.get": "^4.4.2",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^3.2.7"
   },
   "devDependencies": {
     "@12core/eslint-config-12core": "^5.0.0",
