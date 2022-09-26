@@ -47,7 +47,7 @@
     "auto-changelog": "^2.0.0",
     "body-parser": "^1.19.0",
     "dependency-check": "^4.1.0",
-    "eslint": "^7.2.0",
+    "eslint": "^8.24.0",
     "express": "^4.17.1",
     "fetch-cookie": "^1.0.0",
     "gh-release": "^6.0.0",
